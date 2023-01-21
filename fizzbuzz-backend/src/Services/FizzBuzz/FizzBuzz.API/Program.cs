@@ -1,11 +1,19 @@
+using FizzBuzz.Application;
+using FizzBuzz.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// register dependency injection for our architecture.
+builder.Services
+    .AddInfrastructureServices(builder.Configuration)
+    .AddApplicationServices();
 
+// generic asp.net web api stuff
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 var app = builder.Build();
 
