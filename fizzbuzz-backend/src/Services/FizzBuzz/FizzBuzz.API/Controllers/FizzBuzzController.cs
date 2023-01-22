@@ -19,7 +19,7 @@ public class FizzBuzzController : ControllerBase
     // testing purpose
     [HttpPost(Name = "Play")]
     [ProducesResponseType((int)HttpStatusCode.OK)]
-    public async Task<ActionResult<int>> CheckoutOrder([FromBody] ProcessFizzBuzzCommand command)
+    public async Task<ActionResult<int>> Play([FromBody] ProcessFizzBuzzCommand command)
     {
         var result = await _mediator.Send(command);
         return Ok(result);
