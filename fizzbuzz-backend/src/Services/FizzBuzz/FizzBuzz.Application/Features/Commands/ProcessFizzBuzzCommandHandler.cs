@@ -18,9 +18,10 @@ public class ProcessFizzBuzzCommandHandler : IRequestHandler<ProcessFizzBuzzComm
     
     public Task<string> Handle(ProcessFizzBuzzCommand request, CancellationToken cancellationToken)
     {
-        var processor = new FizzBuzzProcessor(request.Input, request.Limit, DateTimeOffset.UtcNow);
+        var processor = new FizzBuzzProcessor(request.Input, DateTimeOffset.UtcNow);
+        var limit = processor.GetRandomLimit(request.Max);
+        processor.ProcessFizzBuzz(limit);
         _logger.LogInformation("adding line to fizzbuzz. timestamp: {timestamp}", processor.SigningTimestamp);
-        processor.ProcessFizzBuzz();
         _fileRepository.SaveProcessedResults(processor.ToString());
         _logger.LogInformation("added line to fizzbuzz. timestamp: {timestamp}", processor.SigningTimestamp);
 
