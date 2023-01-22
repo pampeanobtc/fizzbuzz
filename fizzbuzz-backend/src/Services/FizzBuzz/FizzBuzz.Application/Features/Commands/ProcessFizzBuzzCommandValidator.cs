@@ -6,6 +6,8 @@ public class ProcessFizzBuzzCommandValidator : AbstractValidator<ProcessFizzBuzz
 {
     public ProcessFizzBuzzCommandValidator()
     {
-        RuleFor(x => x.Input).NotEmpty().Must((model, field) => model.Limit > field);
+        RuleFor(x => x.Input)
+            .Must((model, input) => model.Limit > input)
+            .WithMessage("Limit must be higher than Input");
     }
 }
