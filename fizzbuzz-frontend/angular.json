@@ -63,12 +63,15 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "src/proxy.conf.json"
+          },
           "configurations": {
             "production": {
-              "browserTarget": "fizzbuzz-frontend:build:production"
+              "browserTarget": "fizzbuzz-frontend:build:production",
             },
             "development": {
-              "browserTarget": "fizzbuzz-frontend:build:development"
+              "browserTarget": "fizzbuzz-frontend:build:development",
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +79,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "fizzbuzz-frontend:build"
+            "browserTarget": "fizzbuzz-frontend:build",
           }
         },
         "test": {

@@ -6,7 +6,7 @@ public class ProcessFizzBuzzCommandValidator : AbstractValidator<ProcessFizzBuzz
 {
     public ProcessFizzBuzzCommandValidator()
     {
-        RuleFor(x => x.Input).NotEmpty()
+        RuleFor(x => x.Input).GreaterThanOrEqualTo(0)
             .WithMessage("Input must be provided");
     }
 }

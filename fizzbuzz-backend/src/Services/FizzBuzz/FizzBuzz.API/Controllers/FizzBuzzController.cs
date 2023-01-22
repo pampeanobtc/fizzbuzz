@@ -22,6 +22,6 @@ public class FizzBuzzController : ControllerBase
     public async Task<ActionResult<int>> Play([FromBody] ProcessFizzBuzzCommand command)
     {
         var result = await _mediator.Send(command);
-        return Ok(result);
+        return Ok(new { value = result });
     }
 }
