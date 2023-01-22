@@ -16,7 +16,7 @@ public class FizzBuzzProcessorTests
         // arrange
         var timestamp = DateTimeOffset.UtcNow;
         var processor = new FizzBuzzProcessor(input, limit, timestamp);
-        var expectedCount = limit - input;
+        var expectedCount = limit - input + 1;
         var numberList = Enumerable.Range(0, expectedCount);
         // act
         processor.ProcessFizzBuzz();

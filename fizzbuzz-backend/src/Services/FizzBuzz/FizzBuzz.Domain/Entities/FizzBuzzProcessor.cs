@@ -23,7 +23,7 @@ public class FizzBuzzProcessor : EntityBase
     {
         EnsureLimitIsHigherOrEqualToInput(_input, _limit);
 
-        for (var item = _input; item < _limit; item++)
+        for (var item = _input; item <= _limit; item++)
         {
             if (IsDivisibleByThree(item) && IsDivisibleByFive(item))
             {

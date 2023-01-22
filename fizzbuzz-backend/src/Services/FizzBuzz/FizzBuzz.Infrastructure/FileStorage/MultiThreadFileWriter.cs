@@ -55,21 +55,4 @@ public class MultiThreadFileWriter : IMultiThreadFileWriter
             _readWriteLock.ExitWriteLock();
         }
     }
-    // public async void WriteToFile()
-    // {
-    //     while (true)
-    //     {
-    //         if (_token.IsCancellationRequested)
-    //         {
-    //             return;
-    //         }
-    //         await using var w = File.AppendText(_fileStorageSettings.FilePath!);
-    //         while (_textToWrite.TryDequeue(out var textLine))
-    //         {
-    //             await w.WriteLineAsync(textLine);
-    //         }
-    //         await w.FlushAsync();
-    //         Thread.Sleep(100);
-    //     }
-    // }
 }
