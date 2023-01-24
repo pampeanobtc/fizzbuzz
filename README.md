@@ -8,3 +8,11 @@ Einstein will choose a random number to start with – for example: 4, buzz, fiz
 The current application solves the fizzbuzz game's requirement, using the following technicalities:
 - Clean Architecture on Net 6 for the backend with CQRS
 - Angular for the frontend app
+
+To run the backend on docker:
+docker build -t fizzbuzzapi -f fizzbuzz-backend/src/Services/FizzBuzz/FizzBuzz.API/Dockerfile ./fizzbuzz-backend
+to run the frontend on docker:
+docker build -t fizzbuzzapp -f fizzbuzz-frontend/Dockerfile ./fizzbuzz-frontend
+
+to run all with docker compose:
+docker-compose up -d

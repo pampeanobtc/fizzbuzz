@@ -9,8 +9,8 @@ import {FizzBuzzService} from '../../services/fizzbuzz.service';
 export class FizzBuzzComponent {
 
   results: string[] = [];
-  signature: string = "";
-  started: boolean = false;
+  signature = "";
+  started = false;
 
   constructor(private service: FizzBuzzService) {
   }
@@ -23,11 +23,10 @@ export class FizzBuzzComponent {
   }
 
   convertToDate(ticks: number) : Date {
-    var epochTicks = 621355968000000000,
-        ticksPerMillisecond = 10000,
-        jsTicks = 0,
+    const epochTicks = 621355968000000000, ticksPerMillisecond = 10000;
+    let jsTicks = 0;
 
-        jsTicks = (ticks - epochTicks) / ticksPerMillisecond;
-        return new Date(jsTicks);
+    jsTicks = (ticks - epochTicks) / ticksPerMillisecond;
+    return new Date(jsTicks);
   }
 }

@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {catchError} from 'rxjs/operators';
@@ -21,8 +22,8 @@ export interface ApiResult {
 export class FizzBuzzService {
 
   // this should be configurable
-  apiUrl: string = "https://localhost:7045/api/v1/FizzBuzz";
-  maxNumber: number = 100;
+  apiUrl = environment.apiUrl + 'FizzBuzz';
+  maxNumber = 100;
 
   constructor(private http:HttpClient, readonly snackBar: MatSnackBar) {
   }
@@ -55,7 +56,7 @@ export class FizzBuzzService {
     return (error: HttpErrorResponse): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
-      console.error(error);
+      console.error(`error: ${error}. operation: ${operation}`);
 
       this.snackBar.open(error.message, "Close", { duration: 5000 });
 

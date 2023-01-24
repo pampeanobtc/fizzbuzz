@@ -1,0 +1,27 @@
+version: '3'
+services:
+
+  fizzbuzz-app:
+    build: ./fizzbuzz-frontend
+    container_name: fizzbuzz-app
+    environment:
+      - apiUrl=https://localhost:7045
+    ports:
+      - 4200:4200
+
+  fizzbuzz-api:
+    build:
+      context: ./fizzbuzz-backend
+      dockerfile: ./src/Services/FizzBuzz/FizzBuzz.API/Dockerfile
+    container_name: fizzbuzz-api
+    volumes:
+      - api-data:/var/lib/apidata    
+    environment:
+      - FileStorage__FilePath=output.txt
+    ports:
+      - 7045:80
+    links:
+      - fizzbuzz-app
+
+volumes:
+  api-data:
