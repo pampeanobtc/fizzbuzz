@@ -1,0 +1,10 @@
+<div>
+  <app-button
+    color="green"
+    text="PLAY!"
+    (btnClick)="onRandomize()"
+  ></app-button>
+</div>
+<h5>{{signature}}</h5>
+<mat-card class="card" *ngFor="let item of results">{{item}}</mat-card>
+
