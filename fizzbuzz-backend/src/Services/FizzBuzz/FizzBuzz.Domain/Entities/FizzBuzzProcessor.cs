@@ -5,46 +5,40 @@ namespace FizzBuzz.Domain.Entities;
 
 public class FizzBuzzProcessor : EntityBase
 {
-    private readonly List<string> _processedItems;
+    public List<string> Items { get; }
     private readonly int _input;
+    private readonly int _limit;
 
-    public FizzBuzzProcessor(int input, DateTimeOffset signingTime)
+    public FizzBuzzProcessor(int input, int limit, DateTimeOffset signingTime)
     {
         _input = input;
-        _processedItems = new List<string>();
-        
+        Items = new List<string>();
+
+        _limit = limit;
         SigningTimestamp = signingTime.UtcTicks;
     }
 
-    public void ProcessFizzBuzz(int limit)
+    public void ProcessFizzBuzz()
     {
-        EnsureLimitIsHigherThanInput(_input, limit);
+        EnsureMaxIsWithinBoundaries(_limit);
+        EnsureLimitIsHigherThanInput(_input, _limit);
 
-        for (var item = _input; item <= limit; item++)
+        for (var item = _input; item <= _limit; item++)
         {
             if (IsDivisibleByThree(item) && IsDivisibleByFive(item))
             {
-                _processedItems.Add(FizzBuzzConstants.FIZZBUZZ);
+                Items.Add(FizzBuzzConstants.FIZZBUZZ);
             } else if (IsDivisibleByThree(item))
             {
-                _processedItems.Add(FizzBuzzConstants.FIZZ);
+                Items.Add(FizzBuzzConstants.FIZZ);
             } else if (IsDivisibleByFive(item))
             {
-                _processedItems.Add(FizzBuzzConstants.BUZZ);
+                Items.Add(FizzBuzzConstants.BUZZ);
             } else
             {
-                _processedItems.Add(item.ToString());
+                Items.Add(item.ToString());
             }
         }
-    }
-
-    public int GetRandomLimit(int max)
-    {
-        EnsureMaxIsWithinBoundaries(max);
-        EnsureMaxIsHigherThanInput(_input, max);
-        
-        var rnd = new Random();
-        return rnd.Next(_input + 1, max + 1);
     }
 
     private static void EnsureMaxIsWithinBoundaries(int max)
@@ -54,20 +48,7 @@ public class FizzBuzzProcessor : EntityBase
             throw new ArgumentException("Max randomizer must be within 0 and 1000000", nameof(max));
         }    
     }
-
-    private static void EnsureMaxIsHigherThanInput(int input, int max)
-    {
-        if (input >= max)
-        {
-            throw new ArgumentException("Max randomizer must be higher or equal to input", nameof(max));
-        }
-    }
-
-    public List<string> GetProcessedItems()
-    {
-        return _processedItems;
-    }
-
+    
     private static void EnsureLimitIsHigherThanInput(int input, int limit)
     {
         if (input >= limit)
@@ -88,6 +69,6 @@ public class FizzBuzzProcessor : EntityBase
 
     public override string ToString()
     {
-        return string.Concat($"timestamp:{SigningTimestamp.ToString()},", string.Join(',', _processedItems));
+        return string.Concat($"timestamp:{SigningTimestamp.ToString()},", string.Join(',', Items));
     }
 }

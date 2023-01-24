@@ -1,5 +1,6 @@
 using System.Net;
 using FizzBuzz.Application.Features.Commands;
+using FizzBuzz.Application.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,9 +20,10 @@ public class FizzBuzzController : ControllerBase
     // testing purpose
     [HttpPost(Name = "Play")]
     [ProducesResponseType((int)HttpStatusCode.OK)]
+    [Produces(typeof(FizzBuzzResultModel))]
     public async Task<ActionResult<int>> Play([FromBody] ProcessFizzBuzzCommand command)
     {
         var result = await _mediator.Send(command);
-        return Ok(new { value = result });
+        return Ok(result);
     }
 }

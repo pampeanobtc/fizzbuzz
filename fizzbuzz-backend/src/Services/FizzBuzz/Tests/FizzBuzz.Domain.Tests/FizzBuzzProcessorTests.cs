@@ -11,24 +11,24 @@ public class FizzBuzzProcessorTests
     [InlineData(20013, 230490)]
     [InlineData(200, 10293)]
     [InlineData(10000, 20000)]
-    public void GivenValidInputParams_ShouldReturnCorrectFizzAndBuzz(int input, int max)
+    [InlineData(0, 1)]
+    [InlineData(0, 2)]
+    public void GivenValidInputParams_ShouldReturnCorrectFizzAndBuzz(int input, int limit)
     {
         // arrange
         var timestamp = DateTimeOffset.UtcNow;
-        var processor = new FizzBuzzProcessor(input, timestamp);
-        var limit = processor.GetRandomLimit(max);
+        var processor = new FizzBuzzProcessor(input, limit, timestamp);
         // act
-        processor.ProcessFizzBuzz(limit);
+        processor.ProcessFizzBuzz();
         // assert
-        var processedItems = processor.GetProcessedItems();
-        Assert.NotEmpty(processedItems);
+        Assert.NotEmpty(processor.Items);
         Assert.True(input < limit);
         
         var expectedCount = limit - input + 1;
         var numberList = Enumerable.Range(0, expectedCount);
-        Assert.Equal(expectedCount, processedItems.Count);
+        Assert.Equal(expectedCount, processor.Items.Count);
         
-        AssertResults(input, numberList, processedItems);
+        AssertResults(input, numberList, processor.Items);
         Assert.Equal(timestamp.UtcTicks, processor.SigningTimestamp);
     }
 
@@ -58,28 +58,15 @@ public class FizzBuzzProcessorTests
     }
 
     [Theory]
-    [InlineData(10, 5)]
-    [InlineData(10, 10)]
-    [InlineData(10, 2)]
-    public void GivenGreaterInputThanMaxRandomizer_ShouldReturn_OutOfBoundaryError(int input, int max)
+    [InlineData(10, 4)]
+    [InlineData(345, 2)]
+    [InlineData(21, 21)]
+    public void GivenGreaterInputThanLimit_ShouldReturn_OutOfBoundaryError(int input, int limit)
     {
         // arrange
-        var processor = new FizzBuzzProcessor(input, DateTimeOffset.UtcNow);
-        // act // assert
-        Assert.Throws<ArgumentException>(() => processor.GetRandomLimit(max));
-    }
-    
-    [Theory]
-    [InlineData(10)]
-    [InlineData(345)]
-    [InlineData(21)]
-    public void GivenGreaterInputThanLimit_ShouldReturn_OutOfBoundaryError(int input)
-    {
-        // arrange
-        var processor = new FizzBuzzProcessor(input, DateTimeOffset.UtcNow);
+        var processor = new FizzBuzzProcessor(input, limit, DateTimeOffset.UtcNow);
         // act
-        Assert.Throws<ArgumentException>(() => processor.ProcessFizzBuzz(input));
-        Assert.Throws<ArgumentException>(() => processor.ProcessFizzBuzz(input - 1));
+        Assert.Throws<ArgumentException>(() => processor.ProcessFizzBuzz());
     }
 
 }

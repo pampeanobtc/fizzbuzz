@@ -16,14 +16,17 @@ builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: myAllowSpecificOrigins,
         policy  =>
         {
-            policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+            policy
+                .AllowAnyOrigin() // this policy should be specific to the known consumers.
+                .AllowAnyHeader()
+                .AllowAnyMethod();
         });
 });
 
