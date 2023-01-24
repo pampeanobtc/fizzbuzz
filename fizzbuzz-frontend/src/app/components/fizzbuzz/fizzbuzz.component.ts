@@ -8,27 +8,26 @@ import {FizzBuzzService} from '../../services/fizzbuzz.service';
 })
 export class FizzBuzzComponent {
 
-  inputNumber: number = 0;
-  maxNumber: number = 20;
-  results: any = [];
+  results: string[] = [];
+  signature: string = "";
+  started: boolean = false;
 
   constructor(private service: FizzBuzzService) {
   }
 
-  onKey(event: any) {
-    this.maxNumber = parseInt(event.target.value);
-  }
-
-  onShuffle() {
-    this.inputNumber = parseInt(((Math.random() * (this.maxNumber - 1))).toFixed(0));
-    this.doProcess();
-  }
-
-  doProcess() {
-    this.service.processResultsOnApi(this.inputNumber, this.maxNumber).subscribe(res => {
-      this.results = [];
-      const elements = res.value.split(",");
-      this.results = elements.filter((item: string, index: number) => index != 0);
+  onRandomize() {
+    this.service.getRandomizedResults().subscribe(res => {
+      this.results = res.items;
+      this.signature = "Signed at: " + this.convertToDate(res.signature).toString();
     });
+  }
+
+  convertToDate(ticks: number) : Date {
+    var epochTicks = 621355968000000000,
+        ticksPerMillisecond = 10000,
+        jsTicks = 0,
+
+        jsTicks = (ticks - epochTicks) / ticksPerMillisecond;
+        return new Date(jsTicks);
   }
 }

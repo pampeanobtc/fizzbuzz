@@ -1,3 +1,4 @@
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ButtonComponent } from './../button/button/button.component';
 import { HeaderComponent } from './../header/header.component';
 import { HttpClient, HttpHandler } from '@angular/common/http';
@@ -11,10 +12,10 @@ describe('FizzBuzzComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [MatSnackBarModule],
       declarations: [ FizzBuzzComponent, HeaderComponent, ButtonComponent ],
       providers: [ FizzBuzzService, HttpClient, HttpHandler ]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -28,6 +29,7 @@ describe('FizzBuzzComponent', () => {
   });
 
   it(`should result be an fizz-buzz array`,() => {
-    expect(Array.isArray(component.doProcess)).toBeFalsy();
+    expect(Array.isArray(component.onRandomize)).toBeFalsy();
+    expect(Array.isArray(component.results)).toBeTruthy();
   })
 });

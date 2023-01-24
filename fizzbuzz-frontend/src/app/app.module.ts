@@ -5,14 +5,15 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FizzBuzzComponent } from './components/fizzbuzz/fizzbuzz.component';
-import { MessagesComponent } from './components/messages/messages.component';
 import { ButtonComponent } from './components/button/button/button.component';
 import { HeaderComponent } from './components/header/header.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatCardModule} from '@angular/material/card';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MessagesComponent,
     FizzBuzzComponent,
     ButtonComponent,
     HeaderComponent
@@ -20,9 +21,12 @@ import { HeaderComponent } from './components/header/header.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatSnackBarModule
   ],
-  providers: [ HttpClientModule, HttpClient ],
+  providers: [ HttpClientModule, HttpClient, MatSnackBarModule ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

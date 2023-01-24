@@ -1,19 +1,10 @@
-<div class="container">
-  <div>
-    <span class="funny">Specify max number of rounds</span>
-    <input class="rounds-number" type="number" (keyup)="onKey($event)" value="{{maxNumber}}">
-  </div>
+<div>
   <app-button
     color="green"
-    text="Suffle!!"
-    (btnClick)="onShuffle()"
+    text="PLAY!"
+    (btnClick)="onRandomize()"
   ></app-button>
-  <div class="">
-    <ul>
-      <li *ngFor="let item of results">
-        {{item}}
-      </li>
-    </ul>
-  </div>
 </div>
+<h5>{{signature}}</h5>
+<mat-card class="card" *ngFor="let item of results">{{item}}</mat-card>
 

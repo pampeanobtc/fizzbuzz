@@ -1,9 +1,8 @@
-import { MessagesComponent } from './components/messages/messages.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { FizzBuzzComponent } from './components/fizzbuzz/fizzbuzz.component';
 import { HeaderComponent } from './components/header/header.component';
 import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { ButtonComponent } from './components/button/button/button.component';
 
@@ -11,10 +10,10 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule, HttpClientModule
+        HttpClientModule, MatSnackBarModule
       ],
       declarations: [
-        AppComponent, HeaderComponent, FizzBuzzComponent, MessagesComponent, ButtonComponent
+        AppComponent, HeaderComponent, FizzBuzzComponent, ButtonComponent
       ],
     }).compileComponents();
   });

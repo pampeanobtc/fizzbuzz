@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 
@@ -7,7 +8,7 @@ describe('FizzBuzzService', () => {
   let service: FizzBuzzService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ providers: [HttpClient, HttpHandler] });
+    TestBed.configureTestingModule({ providers: [HttpClient, HttpHandler, MatSnackBar] });
     service = TestBed.inject(FizzBuzzService);
   });
 

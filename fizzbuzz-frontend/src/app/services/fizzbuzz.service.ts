@@ -1,17 +1,18 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import {catchError} from 'rxjs/operators';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
-import {HttpClient} from '@angular/common/http';
-import { MessageService } from './message.service';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 
 interface ApiInput {
-  input: number;
-  max: number;
+  randomNumberToStart: number;
+  limit: number;
 }
 
 export interface ApiResult {
-  value: string;
+  items: string[];
+  signature: number
 }
 
 @Injectable({
@@ -19,21 +20,28 @@ export interface ApiResult {
 })
 export class FizzBuzzService {
 
+  // this should be configurable
   apiUrl: string = "https://localhost:7045/api/v1/FizzBuzz";
+  maxNumber: number = 100;
 
-  constructor(private http:HttpClient, private messageService: MessageService) {
+  constructor(private http:HttpClient, readonly snackBar: MatSnackBar) {
   }
 
-  processResultsOnApi(input: number, max: number) : Observable<ApiResult> {
+  getRandomizedResults() : Observable<ApiResult> {
+    const randomNumberToStart = parseInt(((Math.random() * (this.maxNumber - 1))).toFixed(0));
+    const limit = parseInt(((Math.random() * (this.maxNumber))).toFixed(0));
+    return this.processResultsOnApi(randomNumberToStart, limit);
+  }
+
+  processResultsOnApi(randomNumberToStart: number, limit: number) : Observable<ApiResult> {
 
     const payload: ApiInput = {
-      input: input,
-      max: max
+      randomNumberToStart: randomNumberToStart,
+      limit: limit
     };
 
     return this.http.post<ApiResult>(this.apiUrl, payload)
-      .pipe(catchError(this.handleError<ApiResult>('processResultsOnApi'))
-      );
+      .pipe(catchError(this.handleError<ApiResult>('processResultsOnApi')));
   }
 
   /**
@@ -44,19 +52,16 @@ export class FizzBuzzService {
    * @param result - optional value to return as the observable result
    */
   private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
+    return (error: HttpErrorResponse): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
       console.error(error);
 
-      this.log(`${operation} failed: ${error.message}`);
+      this.snackBar.open(error.message, "Close", { duration: 5000 });
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }
 
-  private log(message: string) {
-    this.messageService.add(`FizzBuzzService: ${message}`);
-  }
 }
